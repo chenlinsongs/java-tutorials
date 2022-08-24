@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="baseDir">./log</Property>
+        <property name="pattern" value="%d{yy-MM-dd HH:mm:ss} [%thread] %-5level %logger{80} [%line] - %msg%n"/>
+    </Properties>
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout>
+        </Console>
+        <RollingFile name="infoRollingFile"
+                     fileName="./log/info.log" filePattern="log/info-%d{yyyy-MM-dd-HH-mm}-%i.log">
+            <PatternLayout>
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100MB" />
+            </Policies>
+        </RollingFile>
+        <RollingFile name="errorRollingFile"
+                     fileName="./log/error.log" filePattern="log/error-%d{yyyy-MM-dd-HH-mm}-%i.log">
+            <PatternLayout>
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100MB" />
+            </Policies>
+        </RollingFile>
+        <!--        <File name="file" fileName="app.log">-->
+        <!--            <PatternLayout>-->
+        <!--                <Pattern>%d %p %c{1.} [%t] %m %ex%n</Pattern>-->
+        <!--            </PatternLayout>-->
+        <!--        </File>-->
+        <!--        <RollingFile name="rollingFile"-->
+        <!--                     fileName="./log/application.log" filePattern="log/application-%d{yyyy-MM-dd-HH-mm}-%i.log">-->
+        <!--            <PatternLayout>-->
+        <!--                <Pattern>%d{yyyy-MM-dd-HH:mm:ss} %-5p %m%n</Pattern>-->
+        <!--            </PatternLayout>-->
+        <!--            <Policies>-->
+        <!--                <SizeBasedTriggeringPolicy size="100MB" />-->
+        <!--            </Policies>-->
+        <!--            <DefaultRolloverStrategy max="100">-->
+        <!--                <Delete basePath="${baseDir}" maxDepth="2">-->
+        <!--                    <IfFileName glob="application-*.log">-->
+        <!--                        <IfAny>-->
+        <!--                            <IfAccumulatedFileSize exceeds="1 GB" />--> <!--设置存储空间-->
+        <!--                            <IfAccumulatedFileCount exceeds="2" />-->
+        <!--                        </IfAny>-->
+        <!--                    </IfFileName>-->
+        <!--                </Delete>-->
+        <!--            </DefaultRolloverStrategy>-->
+        <!--        </RollingFile>-->
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+<!--            <AppenderRef ref="file" level="DEBUG"/>-->
+            <AppenderRef ref="STDOUT" level="INFO"/>
+            <AppenderRef ref="infoRollingFile" level="INFO"/>
+            <AppenderRef ref="errorRollingFile" level="ERROR"/>
+        </Root>
+    </Loggers>
+</Configuration>
